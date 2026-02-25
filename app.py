@@ -1,5 +1,6 @@
 import csv
 import io
+import os
 from datetime import timezone, timedelta
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
@@ -7,8 +8,11 @@ from models import db, Event, Participant, SiteConfig
 
 ADMIN_PASSKEY = "connaissance2026"
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "connaissance.db")
+
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///connaissance.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 CORS(app)
